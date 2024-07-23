@@ -2,12 +2,11 @@
 
 import { SearchManuFacturerProps } from '@/types';
 import Image from 'next/image';
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, Key } from 'react'
 
 import { manufacturers } from '@/constants';
 
 import { Combobox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 function SearchManuFacturer(
     {
         manufacturer,
@@ -79,9 +78,26 @@ function SearchManuFacturer(
                                                             }`
                                                     }
                                                     value={query}
-                                                    key={item}
+                                                    key={item as Key}
                                                 >
-                                                    {item}
+                                                    {
+                                                        (
+                                                            { selected, active }) => (
+                                                            <>
+                                                                <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                                                                    {item}
+                                                                </span>
+                                                                {/* Show an active blue background color if the option is selected */}
+                                                                {
+                                                                    selected ? (
+                                                                        <span
+                                                                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-pribg-primary-purple"}`}
+                                                                        ></span>
+                                                                    ) : null
+                                                                }
+                                                            </>
+                                                        )
+                                                    }
                                                 </Combobox.Option>
                                             )
                                         )
